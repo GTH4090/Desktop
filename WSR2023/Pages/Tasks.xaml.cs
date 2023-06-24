@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WSR2023.Models;
 using static WSR2023.Classes.Helper;
 
 namespace WSR2023.Pages
@@ -22,6 +24,7 @@ namespace WSR2023.Pages
     /// </summary>
     public partial class Tasks : Page
     {
+        bool isNew = false;
         public Tasks()
         {
             InitializeComponent();
@@ -36,6 +39,9 @@ namespace WSR2023.Pages
                 executiveEmployeeIdCbx.ItemsSource = Db.Employee.ToList();
                 previousTaskIdCbx.ItemsSource = Db.Task.ToList();
                 statusIdCbx.ItemsSource = Db.TaskStatus.ToList();
+                employeeIdColumn.ItemsSource = Db.Employee.ToList();
+                employeeIdColumn1.ItemsSource = Db.Employee.ToList();
+                
             }
             catch (Exception ex)
             {
@@ -80,16 +86,23 @@ namespace WSR2023.Pages
                 Grid.SetColumnSpan(taskDataGrid, 1);
                 DetailedInfo.Visibility = Visibility.Visible;
                 grid1.DataContext = item;
+                
             }
             
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (isNew)
+            {
+                Db.Task.Add(grid1.DataContext as Models.Task);
+            }
             Db.SaveChanges();
             Grid.SetColumnSpan(taskDataGrid, 2);
             DetailedInfo.Visibility = Visibility.Collapsed;
             grid1.DataContext = null;
+            isNew = false;
+            loadData();
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
@@ -97,6 +110,40 @@ namespace WSR2023.Pages
             Grid.SetColumnSpan(taskDataGrid, 2);
             DetailedInfo.Visibility = Visibility.Collapsed;
             grid1.DataContext = null;
+        }
+
+        private void DownloadBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                var item = ((sender as Button).DataContext as TaskAttachment).Attachment;
+                SaveFileDialog saveFile = new SaveFileDialog();
+                if(saveFile.ShowDialog() == true)
+                {
+                    File.WriteAllBytes(saveFile.FileName, item);
+                }
+            }
+            catch (Exception ex)
+            {
+                Error(ex.Message);
+            }
+        }
+
+        private void SaveTablesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Db.SaveChanges();
+        }
+
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
+            Grid.SetColumnSpan(taskDataGrid, 1);
+            DetailedInfo.Visibility = Visibility.Visible;
+            grid1.DataContext = new Models.Task();
+            (grid1.DataContext as Models.Task).ProjectId = SelectedProject.Id;
+            deadlineDatePicker.SelectedDate = DateTime.Now;
+            isNew = true;
         }
     }
 }

@@ -26,7 +26,11 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
+                            <Grid.ToolTip>
+                                <ToolTip Content="{Binding FullTitle}"/>
+                            </Grid.ToolTip>
                             <Label Content="{Binding DisplayTitle}"/>
+                            
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
