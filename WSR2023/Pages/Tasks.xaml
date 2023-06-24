@@ -27,7 +27,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button x:Name="AddBtn" Content="Добавить" Click="AddBtn_Click"/>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="AddBtn" Content="Добавить" Click="AddBtn_Click"/>
+            <Button x:Name="DelBtn" Content="Удалить" Click="DelBtn_Click"/>
+        </StackPanel>
+        
 
         <GroupBox Header="Поиск:" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto">
             <TextBox x:Name="Searchtbx" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="Auto" TextChanged="Searchtbx_TextChanged"/>

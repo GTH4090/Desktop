@@ -53,7 +53,7 @@ namespace WSR2023.Pages
 
             try
             {
-                List<Models.Task> tasks = SelectedProject.Task.Where(el => el.StatusId != 3).ToList();
+                List<Models.Task> tasks = SelectedProject.Task.Where(el => el.StatusId != 3 && el.StatusId != 4).ToList();
                 tasks = tasks.OrderBy(el => el.SortNum).ToList();
                 if(Searchtbx.Text != "")
                 {
@@ -144,6 +144,31 @@ namespace WSR2023.Pages
             (grid1.DataContext as Models.Task).ProjectId = SelectedProject.Id;
             deadlineDatePicker.SelectedDate = DateTime.Now;
             isNew = true;
+        }
+
+        private void DelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if(taskDataGrid.SelectedItem != null)
+            {
+                if(MessageBox.Show("Вы уверены?", "Точно?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    
+                    var item = taskDataGrid.SelectedItem as Models.Task;
+                    if (item.Task1 != null)
+                    {
+                        if (MessageBox.Show("Эта задача связана с другими, вы уверены?", "Точно?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                        {
+                            foreach (var it in item.Task1)
+                            {
+                                 it.PreviousTaskId = null;
+                            }
+                            Db.Task.FirstOrDefault(el => el.Id == item.Id).StatusId = 4;
+                            Db.SaveChanges();
+                            loadData();
+                        }
+                    }
+                }
+            }
         }
     }
 }
