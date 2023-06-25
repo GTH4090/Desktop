@@ -28,3 +28,5 @@ E:\HACKERMAN\Repos\WSR2023\WSR2023\obj\Debug\Pages\Tasks.g.cs
 E:\HACKERMAN\Repos\WSR2023\WSR2023\obj\Debug\Pages\Dashboard.baml
 E:\HACKERMAN\Repos\WSR2023\WSR2023\obj\Debug\Pages\Gant.baml
 E:\HACKERMAN\Repos\WSR2023\WSR2023\obj\Debug\Pages\Tasks.baml
+E:\HACKERMAN\Repos\WSR2023\WSR2023\obj\Debug\UpWindows\GantWin.g.cs
+E:\HACKERMAN\Repos\WSR2023\WSR2023\obj\Debug\UpWindows\GantWin.baml

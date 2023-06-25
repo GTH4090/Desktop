@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WSR2023.Models;
 using WSR2023.Pages;
+using WSR2023.UpWindows;
 using static WSR2023.Classes.Helper;
 
 namespace WSR2023
@@ -70,7 +71,9 @@ namespace WSR2023
 
         private void GantBtn_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new Gant());
+            GantWin gantWin = new GantWin();
+            gantWin.ShowDialog();
+            MainFrame.Navigate(new Dashboard());
         }
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)

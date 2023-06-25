@@ -24,7 +24,7 @@ namespace WSR2023.Pages
         public Gant()
         {
             InitializeComponent();
-            File.WriteAllText("Memory.txt", "3");
+            
         }
     }
 }
